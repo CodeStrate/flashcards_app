@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function POST(request: { json: () => any; }) {
+export async function POST(request: any) {
     try{
         const data = await request.json();
 
