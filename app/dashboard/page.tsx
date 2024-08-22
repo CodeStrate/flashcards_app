@@ -1,7 +1,6 @@
 "use client";
-
+import { CardData } from "@/app/Interfaces";
 import { MoreHorizontal } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,32 +26,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface Flashcard {
-  id: number;
-  front_content: string;
-  back_content: string;
-  status: string;
-  created_at: string;
-}
-
 export default function FlashcardsDashboard() {
-    //TODO: replace with db data
-  const flashcards: Flashcard[] = [
-    {
-      id: 1,
-      front_content: "What is the capital of France?",
-      back_content: "Paris",
-      status: "Active",
-      created_at: "2024-08-12 10:42 AM",
-    },
-    {
-      id: 2,
-      front_content: "What is 2 + 2?",
-      back_content: "4",
-      status: "Draft",
-      created_at: "2024-08-11 03:21 PM",
-    },
-  ];
+
 
   return (
     <Card>
@@ -77,11 +52,7 @@ export default function FlashcardsDashboard() {
             {flashcards.map((flashcard) => (
               <TableRow key={flashcard.id}>
                 <TableCell className="font-medium">{flashcard.front_content}</TableCell>
-                <TableCell>
-                  <Badge variant="outline">{flashcard.status}</Badge>
-                </TableCell>
                 <TableCell>{flashcard.back_content}</TableCell>
-                <TableCell>{flashcard.created_at}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -104,7 +75,7 @@ export default function FlashcardsDashboard() {
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>{flashcards.length}</strong> flashcards
+          Showing <strong>1-10</strong> of <strong>40</strong> flashcards
         </div>
       </CardFooter>
     </Card>
