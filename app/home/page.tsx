@@ -10,34 +10,50 @@ import {
   
 import '@/app/globals.css'
 import { useState, useEffect } from "react";
-import { CardData } from "@/app/Interfaces";
+import { FCard } from "@/app/Interfaces";
 
 export default function HomePage(){
-    const [cardsData, setCardsData] = useState<CardData[]>([]);
-    const [currentCard, setCurrentCard] = useState<CardData | null>(null);
-    const [currentIndex, setCurrentIndex] = useState<number>(1);
+    const [cardsData, setCardsData] = useState<FCard>({
+      cards: null, currentCard : null, currentIndex: 1
+    });
+
+    const {cards, currentCard, currentIndex} = cardsData;
 
     useEffect(() => {
         fetch('/api/flashcards')
             .then((response) => response.json())
             .then((data) => {
-              setCardsData(data);
-              if(data.length > 0) setCurrentCard(data[0]);
+              setCardsData({
+                ...cardsData,
+                cards: data,
+                currentCard: data[0]
+              });
             })
     }, []);
 
     const handlePagPrevious = () => {
-      if(currentIndex > 1) setCurrentIndex(currentIndex - 1);
-      const card = cardsData[currentIndex - 2];
-
-      setCurrentCard(card);
+      if(cards == null || currentIndex <= 1) return;
+      setCardsData((prev) => {
+        const newIndex = prev.currentIndex - 1;
+        return {
+          ...prev,
+          currentIndex: newIndex,
+          currentCard: prev.cards![newIndex - 1]
+        }
+      });
     }
 
     const handlePagNext = () => {
-      if(currentIndex < cardsData.length - 1) setCurrentIndex(currentIndex + 1);
-      const card = cardsData[currentIndex];
+      if(cards == null || currentIndex >= cards.length) return;
+      setCardsData((prev) => {
+        const newIndex = prev.currentIndex + 1;
+        return {
+          ...prev,
+          currentIndex: newIndex,
+          currentCard: prev.cards![newIndex - 1]
+        }
+      });
 
-      setCurrentCard(card);
     }
 
 
