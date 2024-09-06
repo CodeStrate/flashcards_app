@@ -9,3 +9,8 @@ export interface FCard {
     currentCard? : CardData | null;
     currentIndex : number;
 }
+
+export interface CardDataContextType {
+    cardsData: FCard;
+    setCardsData: React.Dispatch<React.SetStateAction<FCard>>;
+}
